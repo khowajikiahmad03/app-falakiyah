@@ -73,7 +73,14 @@ body {
   align-items: start;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1024px) {
+  .grid-utama {
+    grid-template-columns: 300px 1fr;
+    gap: 1.25rem;
+  }
+}
+
+@media (max-width: 768px) {
   .grid-utama {
     grid-template-columns: 1fr;
   }
@@ -217,6 +224,12 @@ input:focus, select:focus {
   padding: 0.35rem;
   overflow-x: auto;
   gap: 0.25rem;
+  -ms-overflow-style: none;  /* IE/Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.nav-tab::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
 }
 
 .tab-item {
@@ -284,8 +297,14 @@ input:focus, select:focus {
 
 .grid-jadwal {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  grid-template-columns: repeat(6, 1fr);
   gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .grid-jadwal {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 .kartu-sholat {
@@ -571,6 +590,99 @@ h4 {
 }
 
 /* Penyesuaian Tampilan untuk HP (Mobile Responsive) */
+@media (max-width: 600px) {
+  .kontainer {
+    padding: 1rem 0.75rem;
+  }
+  
+  .judul-utama {
+    font-size: 1.8rem;
+    letter-spacing: 1px;
+  }
+  
+  .sub-judul {
+    font-size: 0.85rem;
+  }
+  
+  .kartu {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+  
+  .tab-item {
+    padding: 0.6rem 0.35rem;
+    font-size: 0.8rem;
+    min-width: 95px;
+  }
+  
+  .grid-jadwal {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .kartu-sholat {
+    padding: 1rem 0.5rem;
+    border-radius: 10px;
+  }
+  
+  .waktu-sholat {
+    font-size: 1.45rem;
+  }
+  
+  .baris-input {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .hasil-konversi {
+    font-size: 1.05rem;
+    padding: 0.75rem;
+  }
+  
+  .kontainer-kompas {
+    width: 180px;
+    height: 180px;
+  }
+  
+  .jarum-kiblat {
+    height: 160px;
+    top: 10px;
+  }
+  
+  .jarum-kiblat::before {
+    left: -5px;
+    width: 14px;
+    height: 20px;
+  }
+  
+  .jarum-kiblat::after {
+    top: -18px;
+    font-size: 12px;
+  }
+}
+
+/* Optimasi Tampilan Tablet Portrait (601px - 768px) */
+@media (min-width: 601px) and (max-width: 768px) {
+  .panel-kontrol {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    align-items: end;
+  }
+  
+  .panel-kontrol h2,
+  .panel-kontrol .grup-input:nth-child(2),
+  .panel-kontrol .grup-input:nth-child(5),
+  .panel-kontrol .tombol {
+    grid-column: span 2;
+  }
+  
+  .grid-jadwal {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Penyesuaian Tampilan untuk HP (Mobile Responsive <= 600px) */
 @media (max-width: 600px) {
   .kontainer {
     padding: 1rem 0.75rem;
