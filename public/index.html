@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Falakiyah Antigravity - Aplikasi Astronomi Islam Modern</title>
+  <meta name="description" content="Aplikasi Falakiyah lengkap untuk menghitung jadwal sholat, arah kiblat, konversi tanggal Hijriah, dan fase bulan secara akurat.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="gaya.css">
+</head>
+<body>
+  <div class="latar-belakang"></div>
+  
+  <div class="kontainer">
+    <header class="header">
+      <h1 class="judul-utama">FALAKIYAH ANTIGRAVITY</h1>
+      <p class="sub-judul">Sistem Astronomi & Penentuan Waktu Sholat Full-Stack</p>
+    </header>
+
+    <div class="grid-utama">
+      <!-- PANEL KONTROL LOKASI & PARAMETER -->
+      <aside class="kartu glass panel-kontrol">
+        <h2 class="judul-kartu">
+          <svg class="ikon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+          Lokasi & Parameter
+        </h2>
+        
+        <div class="grup-input">
+          <label for="input-tanggal">Tanggal</label>
+          <input type="date" id="input-tanggal" required>
+        </div>
+
+        <div class="baris-input">
+          <div class="grup-input">
+            <label for="input-lintang">Lintang (°)</label>
+            <input type="number" id="input-lintang" step="any" value="-6.2088" placeholder="Misal: -6.2088" required>
+          </div>
+          <div class="grup-input">
+            <label for="input-bujur">Bujur (°)</label>
+            <input type="number" id="input-bujur" step="any" value="106.8456" placeholder="Misal: 106.8456" required>
+          </div>
+        </div>
+
+        <div class="baris-input">
+          <div class="grup-input">
+            <label for="input-zona-waktu">Zona Waktu (GMT)</label>
+            <input type="number" id="input-zona-waktu" value="7" placeholder="Misal: 7" required>
+          </div>
+          <div class="grup-input">
+            <label for="input-ketinggian">Ketinggian (m)</label>
+            <input type="number" id="input-ketinggian" value="10" placeholder="Ketinggian mdpl">
+          </div>
+        </div>
+
+        <div class="grup-input">
+          <label>Nama Tempat Terdeteksi</label>
+          <div id="teks-nama-lokasi" class="nama-lokasi-box">Menghubungkan...</div>
+        </div>
+
+        <div class="grup-input">
+          <label for="pilih-metode">Metode Perhitungan</label>
+          <select id="pilih-metode"></select>
+        </div>
+
+        <div class="grup-input">
+          <label for="pilih-madzhab">Madzhab (Waktu Ashar)</label>
+          <select id="pilih-madzhab"></select>
+        </div>
+
+        <button id="tombol-deteksi-lokasi" class="tombol tombol-sekunder">
+          Deteksi Lokasi Otomatis
+        </button>
+      </aside>
+
+      <!-- PANEL UTAMA FITUR -->
+      <main class="panel-utama">
+        <!-- NAVIGASI TAB -->
+        <nav class="nav-tab glass">
+          <button class="tab-item aktif" data-tab="tab-jadwal">Jadwal Sholat</button>
+          <button class="tab-item" data-tab="tab-kiblat">Arah Kiblat</button>
+          <button class="tab-item" data-tab="tab-hijriah">Kalender Hijriah</button>
+          <button class="tab-item" data-tab="tab-bulan">Fase Bulan</button>
+          <button class="tab-item" data-tab="tab-pengaturan">Pengaturan DB</button>
+        </nav>
+
+        <!-- ISI TAB JADWAL SHOLAT -->
+        <section id="tab-jadwal" class="konten-tab aktif">
+          <div class="info-lokasi-jadwal" id="box-lokasi-jadwal">
+            <svg class="ikon-lokasi" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span id="label-lokasi-jadwal">Lokasi: Memuat...</span>
+          </div>
+          <div class="grid-jadwal" id="kontainer-jadwal">
+            <!-- Card waktu sholat akan diisi oleh JS -->
+          </div>
+        </section>
+
+        <!-- ISI TAB ARAH KIBLAT -->
+        <section id="tab-kiblat" class="konten-tab">
+          <div class="kartu glass flex-pusat">
+            <h3 class="judul-kiblat">Arah Kiblat dari Lokasi Anda</h3>
+            <p id="teks-kiblat" class="nilai-kiblat">--° dari Utara</p>
+            
+            <div class="kontainer-kompas">
+              <div class="kompas" id="kompas-kiblat">
+                <span class="kompas-arah utara">U</span>
+                <span class="kompas-arah timur">T</span>
+                <span class="kompas-arah selatan">S</span>
+                <span class="kompas-arah barat">B</span>
+                <div class="jarum-kiblat" id="jarum-kiblat-id"></div>
+              </div>
+            </div>
+            <p class="keterangan-kompas">Arahkan jarum emas ke arah Ka'bah (simbol bintang/jarum utama).</p>
+          </div>
+        </section>
+
+        <!-- ISI TAB KALENDER HIJRIAH -->
+        <section id="tab-hijriah" class="konten-tab">
+          <div class="grid-dua-kolom">
+            <div class="kartu glass">
+              <h3>Masehi ke Hijriah</h3>
+              <div class="grup-input">
+                <label for="conv-m-tanggal">Tanggal Masehi</label>
+                <input type="date" id="conv-m-tanggal">
+              </div>
+              <button id="tombol-m-ke-h" class="tombol tombol-utama">Konversi ke Hijriah</button>
+              <div class="hasil-konversi" id="hasil-m-ke-h">--</div>
+            </div>
+
+            <div class="kartu glass">
+              <h3>Hijriah ke Masehi</h3>
+              <div class="baris-input">
+                <div class="grup-input">
+                  <label for="conv-h-tanggal">Hari</label>
+                  <input type="number" id="conv-h-hari" min="1" max="30" value="1">
+                </div>
+                <div class="grup-input">
+                  <label for="conv-h-bulan">Bulan</label>
+                  <select id="conv-h-bulan">
+                    <option value="1">1. Muharram</option>
+                    <option value="2">2. Safar</option>
+                    <option value="3">3. Rabi'ul Awal</option>
+                    <option value="4">4. Rabi'ul Akhir</option>
+                    <option value="5">5. Jumadil Awal</option>
+                    <option value="6">6. Jumadil Akhir</option>
+                    <option value="7">7. Rajab</option>
+                    <option value="8">8. Sya'ban</option>
+                    <option value="9">9. Ramadhan</option>
+                    <option value="10">10. Syawal</option>
+                    <option value="11">11. Dzulqa'dah</option>
+                    <option value="12">12. Dzulhijjah</option>
+                  </select>
+                </div>
+                <div class="grup-input">
+                  <label for="conv-h-tahun">Tahun</label>
+                  <input type="number" id="conv-h-tahun" min="1" value="1447">
+                </div>
+              </div>
+              <button id="tombol-h-ke-m" class="tombol tombol-utama">Konversi ke Masehi</button>
+              <div class="hasil-konversi" id="hasil-h-ke-m">--</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ISI TAB FASE BULAN -->
+        <section id="tab-bulan" class="konten-tab">
+          <div class="kartu glass flex-pusat">
+            <h3 id="nama-fase-bulan">--</h3>
+            
+            <div class="visualisasi-bulan">
+              <div class="bulan-luar">
+                <div class="bulan-bayangan" id="bulan-bayangan-id"></div>
+              </div>
+            </div>
+            
+            <div class="grid-dua-kolom lebar-penuh">
+              <div class="item-info">
+                <span>Iluminasi (Cahaya)</span>
+                <strong id="iluminasi-bulan">--%</strong>
+              </div>
+              <div class="item-info">
+                <span>Umur Bulan</span>
+                <strong id="umur-bulan">-- hari</strong>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ISI TAB PENGATURAN DATABASE -->
+        <section id="tab-pengaturan" class="konten-tab">
+          <div class="grid-dua-kolom">
+            
+            <!-- Pengelolaan Metode Perhitungan -->
+            <div class="kartu glass">
+              <h3>Metode Perhitungan</h3>
+              <div class="kontainer-tabel">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nama</th>
+                      <th>Subuh</th>
+                      <th>Isya</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabel-metode">
+                    <!-- Diisi oleh JS -->
+                  </tbody>
+                </table>
+              </div>
+              
+              <hr class="pembatas">
+              
+              <h4>Tambah Metode</h4>
+              <form id="form-tambah-metode">
+                <div class="grup-input">
+                  <label for="metode-nama">Nama Metode</label>
+                  <input type="text" id="metode-nama" placeholder="Misal: Kemenag RI Baru" required>
+                </div>
+                <div class="baris-input">
+                  <div class="grup-input">
+                    <label for="metode-subuh">Sudut Subuh (°)</label>
+                    <input type="number" id="metode-subuh" step="0.1" value="20" required>
+                  </div>
+                  <div class="grup-input">
+                    <label for="metode-isya">Sudut Isya (°)</label>
+                    <input type="number" id="metode-isya" step="0.1" value="18" required>
+                  </div>
+                </div>
+                <button type="submit" class="tombol tombol-utama">Simpan Metode</button>
+              </form>
+            </div>
+
+            <!-- Pengelolaan Madzhab -->
+            <div class="kartu glass">
+              <h3>Metode Sholat (Madzhab)</h3>
+              <div class="kontainer-tabel">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Nama</th>
+                      <th>Faktor Ashar</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tabel-madzhab">
+                    <!-- Diisi oleh JS -->
+                  </tbody>
+                </table>
+              </div>
+              
+              <hr class="pembatas">
+              
+              <h4>Tambah Madzhab</h4>
+              <form id="form-tambah-madzhab">
+                <div class="grup-input">
+                  <label for="madzhab-nama">Nama Madzhab</label>
+                  <input type="text" id="madzhab-nama" placeholder="Misal: Hanafi Baru" required>
+                </div>
+                <div class="grup-input">
+                  <label for="madzhab-faktor">Faktor Ashar (Panjang Bayangan)</label>
+                  <input type="number" id="madzhab-faktor" step="0.1" value="1.0" placeholder="1 untuk Syafii, 2 untuk Hanafi" required>
+                </div>
+                <button type="submit" class="tombol tombol-utama">Simpan Madzhab</button>
+              </form>
+            </div>
+
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <footer class="footer-bawah">
+    <p>&copy; 2026 Falakiyah Antigravity. Desain Premium Minimalis.</p>
+  </footer>
+
+  <script src="aplikasi.js"></script>
+</body>
+</html>
